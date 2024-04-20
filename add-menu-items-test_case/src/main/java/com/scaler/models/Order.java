@@ -3,7 +3,18 @@ package com.scaler.models;
 import java.util.Map;
 
 public class Order extends BaseModel{
-    private String id;
     private Customer customer;
     private Map<MenuItem, Integer> orderedItems;
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	public Map<MenuItem, Integer> getOrderedItems() {
+		return orderedItems;
+	}
+	public void setOrderedItems(Map<MenuItem, Integer> orderedItems) {
+		this.orderedItems = orderedItems;
+	}
 }

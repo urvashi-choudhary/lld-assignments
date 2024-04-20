@@ -1,6 +1,5 @@
 package com.example.bookroomsolution.dtos;
 
-import java.util.Locale;
 import java.util.Map;
 
 public class MakeBookingRequestDto {

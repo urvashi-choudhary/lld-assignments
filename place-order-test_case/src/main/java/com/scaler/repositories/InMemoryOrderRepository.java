@@ -1,10 +1,9 @@
 package com.scaler.repositories;
 
-import com.scaler.models.Order;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import com.scaler.models.Order;
 
 public class InMemoryOrderRepository implements OrderRepository{
 

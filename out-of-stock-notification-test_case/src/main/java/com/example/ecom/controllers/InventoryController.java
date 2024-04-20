@@ -10,13 +10,8 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class InventoryController {
-
+	@Autowired
     private InventoryService inventoryService;
-
-    @Autowired
-    public InventoryController(InventoryService inventoryService) {
-        this.inventoryService = inventoryService;
-    }
 
     public UpdateInventoryResponseDto updateInventory(UpdateInventoryRequestDto requestDto) {
         UpdateInventoryResponseDto responseDto = new UpdateInventoryResponseDto();

@@ -8,39 +8,34 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class UrlController {
+	@Autowired
+	private UrlService urlService;
 
-    private UrlService urlService;
+	public ShortenUrlResponseDto shortenUrl(ShortenUrlRequestDto requestDto) {
 
-    @Autowired
-    public UrlController(UrlService urlService) {
-        this.urlService = urlService;
-    }
+		ShortenUrlResponseDto responseDto = new ShortenUrlResponseDto();
+		try {
+			ShortenedUrl shortenedUrl = urlService.shortenUrl(requestDto.getOriginalUrl(), requestDto.getUserId());
+			responseDto.setShortUrl(shortenedUrl.getShortUrl());
+			responseDto.setExpiresAt(shortenedUrl.getExpiresAt());
+			responseDto.setStatus(ResponseStatus.SUCCESS);
+		} catch (Exception e) {
+			responseDto.setStatus(ResponseStatus.FAILURE);
+		}
 
-    public ShortenUrlResponseDto shortenUrl(ShortenUrlRequestDto requestDto) {
+		return responseDto;
+	}
 
-        ShortenUrlResponseDto responseDto = new ShortenUrlResponseDto();
-        try{
-            ShortenedUrl shortenedUrl = urlService.shortenUrl(requestDto.getOriginalUrl(), requestDto.getUserId());
-            responseDto.setShortUrl(shortenedUrl.getShortUrl());
-            responseDto.setExpiresAt(shortenedUrl.getExpiresAt());
-            responseDto.setStatus(ResponseStatus.SUCCESS);
-        } catch (Exception e) {
-            responseDto.setStatus(ResponseStatus.FAILURE);
-        }
-
-        return responseDto;
-    }
-
-    public ResolveShortenUrlResponseDto resolveShortenedUrl(ResolveShortenUrlRequestDto requestDto) {
-        ResolveShortenUrlResponseDto responseDto = new ResolveShortenUrlResponseDto();
-        try{
-            String originalUrl = urlService.resolveShortenedUrl(requestDto.getShortenUrl());
-            responseDto.setOriginalUrl(originalUrl);
-            responseDto.setStatus(ResponseStatus.SUCCESS);
-        } catch (Exception e) {
-            e.printStackTrace();
-            responseDto.setStatus(ResponseStatus.FAILURE);
-        }
-        return responseDto;
-    }
+	public ResolveShortenUrlResponseDto resolveShortenedUrl(ResolveShortenUrlRequestDto requestDto) {
+		ResolveShortenUrlResponseDto responseDto = new ResolveShortenUrlResponseDto();
+		try {
+			String originalUrl = urlService.resolveShortenedUrl(requestDto.getShortenUrl());
+			responseDto.setOriginalUrl(originalUrl);
+			responseDto.setStatus(ResponseStatus.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			responseDto.setStatus(ResponseStatus.FAILURE);
+		}
+		return responseDto;
+	}
 }

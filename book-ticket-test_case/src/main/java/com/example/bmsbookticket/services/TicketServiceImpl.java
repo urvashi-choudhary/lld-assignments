@@ -13,20 +13,12 @@ import java.util.List;
 
 @Service
 public class TicketServiceImpl implements TicketService {
-
-	private ShowSeatRepository showSeatRepository;
-
-	private TicketRepository ticketRepository;
-
-	private UserRepository userRepository;
-
 	@Autowired
-	public TicketServiceImpl(ShowSeatRepository showSeatRepository, TicketRepository ticketRepository,
-			UserRepository userRepository) {
-		this.showSeatRepository = showSeatRepository;
-		this.ticketRepository = ticketRepository;
-		this.userRepository = userRepository;
-	}
+	private ShowSeatRepository showSeatRepository;
+	@Autowired
+	private TicketRepository ticketRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public Ticket bookTicket(List<Integer> showSeatIds, int userId) throws Exception {

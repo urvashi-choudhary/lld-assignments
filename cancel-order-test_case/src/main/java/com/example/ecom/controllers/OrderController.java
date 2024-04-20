@@ -10,13 +10,8 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class OrderController {
-
+	@Autowired
     private OrderService orderService;
-
-    @Autowired
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
-    }
 
     public CancelOrderResponseDto cancelOrder(CancelOrderRequestDto cancelOrderRequestDto) {
         CancelOrderResponseDto cancelOrderResponseDto = new CancelOrderResponseDto();

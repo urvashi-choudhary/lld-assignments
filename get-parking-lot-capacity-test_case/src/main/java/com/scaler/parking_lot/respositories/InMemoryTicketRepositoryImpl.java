@@ -1,11 +1,10 @@
 package com.scaler.parking_lot.respositories;
 
-import com.scaler.parking_lot.models.*;
-
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import com.scaler.parking_lot.models.Ticket;
 
 public class InMemoryTicketRepositoryImpl implements TicketRepository{
     private Map<Long, Ticket> ticketMap;

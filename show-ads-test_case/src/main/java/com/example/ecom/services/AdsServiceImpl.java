@@ -13,35 +13,30 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AdsServiceImpl implements AdsService{
+public class AdsServiceImpl implements AdsService {
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private AdvertisementRepository advertisementRepository;
 
-    private UserRepository userRepository;
-    private AdvertisementRepository advertisementRepository;
+	@Override
+	public Advertisement getAdvertisementForUser(int userId) throws UserNotFoundException {
+		Optional<User> optionalUser = userRepository.findById(userId);
 
-    @Autowired
-    public AdsServiceImpl(UserRepository userRepository, AdvertisementRepository advertisementRepository) {
-        this.userRepository = userRepository;
-        this.advertisementRepository = advertisementRepository;
-    }
+		if (optionalUser.isEmpty()) {
+			throw new UserNotFoundException("User not found");
+		}
+		User user = optionalUser.get();
+		List<Preference> preferences = user.getPreferences();
+		if (preferences.isEmpty()) {
+			return getRandomAd(advertisementRepository.findAll());
+		}
+		List<Advertisement> advertisements = advertisementRepository.findAdvertisementsByPreferenceIn(preferences);
+		return getRandomAd(advertisements);
+	}
 
-    @Override
-    public Advertisement getAdvertisementForUser(int userId) throws UserNotFoundException {
-        Optional<User> optionalUser = userRepository.findById(userId);
-
-        if(optionalUser.isEmpty()){
-            throw new UserNotFoundException("User not found");
-        }
-        User user = optionalUser.get();
-        List<Preference> preferences = user.getPreferences();
-        if(preferences.isEmpty()){
-            return getRandomAd(advertisementRepository.findAll());
-        }
-        List<Advertisement> advertisements = advertisementRepository.findAdvertisementsByPreferenceIn(preferences);
-        return getRandomAd(advertisements);
-    }
-
-    private Advertisement getRandomAd(List<Advertisement> advertisements){
-        int randomIndex = (int) (Math.random() * advertisements.size());
-        return advertisements.get(randomIndex);
-    }
+	private Advertisement getRandomAd(List<Advertisement> advertisements) {
+		int randomIndex = (int) (Math.random() * advertisements.size());
+		return advertisements.get(randomIndex);
+	}
 }

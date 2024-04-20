@@ -13,37 +13,33 @@ import com.example.bmsbookticket.services.RatingsService;
 
 @Controller
 public class RatingsController {
+	@Autowired
+	private RatingsService ratingsService;
 
-    private RatingsService ratingsService;
+	public RateMovieResponseDto rateMovie(RateMovieRequestDto requestDto) {
+		RateMovieResponseDto responseDto = new RateMovieResponseDto();
+		try {
+			Rating rating = ratingsService.rateMovie(requestDto.getUserId(), requestDto.getMovieId(),
+					requestDto.getRating());
+			responseDto.setRating(rating);
+			responseDto.setResponseStatus(ResponseStatus.SUCCESS);
+			return responseDto;
+		} catch (Exception e) {
+			responseDto.setResponseStatus(ResponseStatus.FAILURE);
+			return responseDto;
+		}
+	}
 
-    @Autowired
-    public RatingsController(RatingsService ratingsService) {
-        this.ratingsService = ratingsService;
-    }
-
-    public RateMovieResponseDto rateMovie(RateMovieRequestDto requestDto){
-        RateMovieResponseDto responseDto = new RateMovieResponseDto();
-        try{
-            Rating rating = ratingsService.rateMovie(requestDto.getUserId(), requestDto.getMovieId(), requestDto.getRating());
-            responseDto.setRating(rating);
-            responseDto.setResponseStatus(ResponseStatus.SUCCESS);
-            return responseDto;
-        } catch (Exception e){
-            responseDto.setResponseStatus(ResponseStatus.FAILURE);
-            return responseDto;
-        }
-    }
-
-    public GetAverageMovieResponseDto getAverageMovieRating(GetAverageMovieRequestDto requestDto){
-        GetAverageMovieResponseDto responseDto = new GetAverageMovieResponseDto();
-        try{
-            double averageRating = ratingsService.getAverageRating(requestDto.getMovieId());
-            responseDto.setAverageRating(averageRating);
-            responseDto.setResponseStatus(ResponseStatus.SUCCESS);
-            return responseDto;
-        } catch (Exception e){
-            responseDto.setResponseStatus(ResponseStatus.FAILURE);
-            return responseDto;
-        }
-    }
+	public GetAverageMovieResponseDto getAverageMovieRating(GetAverageMovieRequestDto requestDto) {
+		GetAverageMovieResponseDto responseDto = new GetAverageMovieResponseDto();
+		try {
+			double averageRating = ratingsService.getAverageRating(requestDto.getMovieId());
+			responseDto.setAverageRating(averageRating);
+			responseDto.setResponseStatus(ResponseStatus.SUCCESS);
+			return responseDto;
+		} catch (Exception e) {
+			responseDto.setResponseStatus(ResponseStatus.FAILURE);
+			return responseDto;
+		}
+	}
 }

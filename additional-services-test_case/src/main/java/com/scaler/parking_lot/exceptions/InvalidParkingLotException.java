@@ -1,7 +1,9 @@
 package com.scaler.parking_lot.exceptions;
 
 public class InvalidParkingLotException extends Exception{
-    public InvalidParkingLotException(String message) {
+    private static final long serialVersionUID = 1L;
+
+	public InvalidParkingLotException(String message) {
         super(message);
     }
 }

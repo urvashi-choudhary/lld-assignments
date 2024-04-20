@@ -36,7 +36,7 @@ public class Player {
 
         System.out.println("Please tell the col index to make a move");
         int colNumber = scanner.nextInt();
-
+        scanner.close();
         return new Move(this, new Cell(rowNumber, colNumber));
     }
 }

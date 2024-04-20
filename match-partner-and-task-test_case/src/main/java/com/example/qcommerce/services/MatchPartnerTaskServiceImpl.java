@@ -12,23 +12,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MatchPartnerTaskServiceImpl implements MatchPartnerTaskService{
+public class MatchPartnerTaskServiceImpl implements MatchPartnerTaskService {
+	@Autowired
+	private PartnerRepository partnerRepository;
+	@Autowired
+	private TaskRepository taskRepository;
+	@Autowired
+	private MatchPartnerTaskStrategy matchPartnerTaskStrategy;
 
-    private PartnerRepository partnerRepository;
-    private TaskRepository taskRepository;
-    private MatchPartnerTaskStrategy matchPartnerTaskStrategy;
-
-    @Autowired
-    public MatchPartnerTaskServiceImpl(PartnerRepository partnerRepository, TaskRepository taskRepository, MatchPartnerTaskStrategy matchPartnerTaskStrategy) {
-        this.partnerRepository = partnerRepository;
-        this.taskRepository = taskRepository;
-        this.matchPartnerTaskStrategy = matchPartnerTaskStrategy;
-    }
-
-    @Override
-    public List<PartnerTaskMapping> matchPartnersAndTasks(List<Long> partnerIds, List<Long> taskIds) {
-        List<Partner> partners = partnerRepository.findAllById(partnerIds);
-        List<Task> tasks = taskRepository.findAllById(taskIds);
-        return matchPartnerTaskStrategy.matchPartnersAndTasks(partners, tasks);
-    }
+	@Override
+	public List<PartnerTaskMapping> matchPartnersAndTasks(List<Long> partnerIds, List<Long> taskIds) {
+		List<Partner> partners = partnerRepository.findAllById(partnerIds);
+		List<Task> tasks = taskRepository.findAllById(taskIds);
+		return matchPartnerTaskStrategy.matchPartnersAndTasks(partners, tasks);
+	}
 }

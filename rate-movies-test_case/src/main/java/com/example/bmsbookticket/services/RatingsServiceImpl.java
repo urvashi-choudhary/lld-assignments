@@ -15,41 +15,37 @@ import java.util.Optional;
 
 @Service
 public class RatingsServiceImpl implements RatingsService {
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private MovieRepository movieRepository;
+	@Autowired
+	private RatingRepository ratingRepository;
 
-    private UserRepository userRepository;
-    private MovieRepository movieRepository;
-    private RatingRepository ratingRepository;
+	@Override
+	public Rating rateMovie(int userId, int movieId, int rating) throws UserNotFoundException, MovieNotFoundException {
+		User user = this.userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+		Movie movie = this.movieRepository.findById(movieId)
+				.orElseThrow(() -> new MovieNotFoundException("Movie not found"));
 
-    @Autowired
-    public RatingsServiceImpl(UserRepository userRepository, MovieRepository movieRepository, RatingRepository ratingRepository) {
-        this.userRepository = userRepository;
-        this.movieRepository = movieRepository;
-        this.ratingRepository = ratingRepository;
-    }
+		// Check if user has already rated the movie, then update the rating
+		Optional<Rating> optionalRating = this.ratingRepository.findByUserAndMovie(user, movie);
+		if (optionalRating.isPresent()) {
+			Rating ratingObj = optionalRating.get();
+			ratingObj.setRating(rating);
+			return this.ratingRepository.save(ratingObj);
+		}
 
-    @Override
-    public Rating rateMovie(int userId, int movieId, int rating) throws UserNotFoundException, MovieNotFoundException {
-        User user = this.userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
-        Movie movie = this.movieRepository.findById(movieId).orElseThrow(() -> new MovieNotFoundException("Movie not found"));
+		Rating ratingObj = new Rating();
+		ratingObj.setMovie(movie);
+		ratingObj.setUser(user);
+		ratingObj.setRating(rating);
+		return this.ratingRepository.save(ratingObj);
+	}
 
-        // Check if user has already rated the movie, then update the rating
-        Optional<Rating> optionalRating = this.ratingRepository.findByUserAndMovie(user, movie);
-        if(optionalRating.isPresent()){
-            Rating ratingObj = optionalRating.get();
-            ratingObj.setRating(rating);
-            return this.ratingRepository.save(ratingObj);
-        }
-
-        Rating ratingObj = new Rating();
-        ratingObj.setMovie(movie);
-        ratingObj.setUser(user);
-        ratingObj.setRating(rating);
-        return this.ratingRepository.save(ratingObj);
-    }
-
-    @Override
-    public double getAverageRating(int movieId) throws MovieNotFoundException {
-        this.movieRepository.findById(movieId).orElseThrow(() -> new MovieNotFoundException("Movie not found"));
-        return this.ratingRepository.getAverageRatingForMovie(movieId);
-    }
+	@Override
+	public double getAverageRating(int movieId) throws MovieNotFoundException {
+		this.movieRepository.findById(movieId).orElseThrow(() -> new MovieNotFoundException("Movie not found"));
+		return this.ratingRepository.getAverageRatingForMovie(movieId);
+	}
 }

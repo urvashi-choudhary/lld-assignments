@@ -1,7 +1,9 @@
 package com.example.ecom.exceptions;
 
 public class InvalidAddressException extends Exception {
-    public InvalidAddressException(String message) {
+    private static final long serialVersionUID = 1L;
+
+	public InvalidAddressException(String message) {
         super(message);
     }
 }

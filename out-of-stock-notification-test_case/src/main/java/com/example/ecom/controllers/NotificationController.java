@@ -8,35 +8,31 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class NotificationController {
+	@Autowired
+	private NotificationService notificationService;
 
-    private NotificationService notificationService;
+	public RegisterUserForNotificationResponseDto registerUser(RegisterUserForNotificationRequestDto requestDto) {
+		RegisterUserForNotificationResponseDto responseDto = new RegisterUserForNotificationResponseDto();
+		try {
+			Notification notification = notificationService.registerUser(requestDto.getUserId(),
+					requestDto.getProductId());
+			responseDto.setNotification(notification);
+			responseDto.setResponseStatus(ResponseStatus.SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			responseDto.setResponseStatus(ResponseStatus.FAILURE);
+		}
+		return responseDto;
+	}
 
-    @Autowired
-    public NotificationController(NotificationService notificationService) {
-        this.notificationService = notificationService;
-    }
-
-    public RegisterUserForNotificationResponseDto registerUser(RegisterUserForNotificationRequestDto requestDto) {
-        RegisterUserForNotificationResponseDto responseDto = new RegisterUserForNotificationResponseDto();
-        try {
-            Notification notification = notificationService.registerUser(requestDto.getUserId(), requestDto.getProductId());
-            responseDto.setNotification(notification);
-            responseDto.setResponseStatus(ResponseStatus.SUCCESS);
-        } catch (Exception e){
-            e.printStackTrace();
-            responseDto.setResponseStatus(ResponseStatus.FAILURE);
-        }
-        return responseDto;
-    }
-
-    public DeregisterUserForNotificationResponseDto deregisterUser(DeregisterUserForNotificationRequestDto requestDto) {
-        DeregisterUserForNotificationResponseDto responseDto = new DeregisterUserForNotificationResponseDto();
-        try {
-            notificationService.deregisterUser(requestDto.getUserId(), requestDto.getNotificationId());
-            responseDto.setResponseStatus(ResponseStatus.SUCCESS);
-        } catch (Exception e){
-            responseDto.setResponseStatus(ResponseStatus.FAILURE);
-        }
-        return responseDto;
-    }
+	public DeregisterUserForNotificationResponseDto deregisterUser(DeregisterUserForNotificationRequestDto requestDto) {
+		DeregisterUserForNotificationResponseDto responseDto = new DeregisterUserForNotificationResponseDto();
+		try {
+			notificationService.deregisterUser(requestDto.getUserId(), requestDto.getNotificationId());
+			responseDto.setResponseStatus(ResponseStatus.SUCCESS);
+		} catch (Exception e) {
+			responseDto.setResponseStatus(ResponseStatus.FAILURE);
+		}
+		return responseDto;
+	}
 }

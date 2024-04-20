@@ -17,38 +17,38 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
+	@Autowired
+	private ProductRepository productRepository;
+	@Autowired
+	private AddressRepository addressRepository;
+	@Autowired
+	private DeliveryHubRepository deliveryHubRepository;
+	@Autowired
+	private MapsAdapter mapsAdapter;
 
-    private ProductRepository productRepository;
-    private AddressRepository addressRepository;
-    private DeliveryHubRepository deliveryHubRepository;
+	@Override
+	public Date estimateDeliveryDate(int productId, int addressId)
+			throws ProductNotFoundException, AddressNotFoundException {
+		Product product = this.productRepository.findById(productId)
+				.orElseThrow(() -> new ProductNotFoundException("Product not found"));
+		Address userAddress = this.addressRepository.findById(addressId)
+				.orElseThrow(() -> new AddressNotFoundException("Address not found"));
 
-    private MapsAdapter mapsAdapter;
+		Seller seller = product.getSeller();
+		Address sellerAddress = seller.getAddress();
+		DeliveryHub deliveryHub = this.deliveryHubRepository.findByAddress_ZipCode(sellerAddress.getZipCode())
+				.orElseThrow(() -> new AddressNotFoundException("Delivery hub not found"));
 
-    @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, AddressRepository addressRepository, DeliveryHubRepository deliveryHubRepository, MapsAdapter mapsAdapter) {
-        this.productRepository = productRepository;
-        this.addressRepository = addressRepository;
-        this.deliveryHubRepository = deliveryHubRepository;
-        this.mapsAdapter = mapsAdapter;
-    }
+		// Calculate time estimate between seller and hub
+		int estimate = mapsAdapter.getEstimatedTime(sellerAddress.getLatitude(), sellerAddress.getLongitude(),
+				deliveryHub.getAddress().getLatitude(), deliveryHub.getAddress().getLongitude());
+		// Calculate time estimate between hub and user
+		estimate += mapsAdapter.getEstimatedTime(deliveryHub.getAddress().getLatitude(),
+				deliveryHub.getAddress().getLongitude(), userAddress.getLatitude(), userAddress.getLongitude());
 
-    @Override
-    public Date estimateDeliveryDate(int productId, int addressId) throws ProductNotFoundException, AddressNotFoundException {
-        Product product = this.productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException("Product not found"));
-        Address userAddress = this.addressRepository.findById(addressId).orElseThrow(() -> new AddressNotFoundException("Address not found"));
-
-        Seller seller = product.getSeller();
-        Address sellerAddress = seller.getAddress();
-        DeliveryHub deliveryHub = this.deliveryHubRepository.findByAddress_ZipCode(sellerAddress.getZipCode()).orElseThrow(() -> new AddressNotFoundException("Delivery hub not found"));
-
-        //Calculate time estimate between seller and hub
-        int estimate = mapsAdapter.getEstimatedTime(sellerAddress.getLatitude(), sellerAddress.getLongitude(), deliveryHub.getAddress().getLatitude(), deliveryHub.getAddress().getLongitude());
-        //Calculate time estimate between hub and user
-        estimate += mapsAdapter.getEstimatedTime(deliveryHub.getAddress().getLatitude(), deliveryHub.getAddress().getLongitude(), userAddress.getLatitude(), userAddress.getLongitude());
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.SECOND, estimate);
-        return calendar.getTime();
-    }
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.SECOND, estimate);
+		return calendar.getTime();
+	}
 }

@@ -12,13 +12,8 @@ import java.util.List;
 
 @Controller
 public class MatchPartnerTaskController {
-
+	@Autowired
     private MatchPartnerTaskService matchPartnerTaskService;
-
-    @Autowired
-    public MatchPartnerTaskController(MatchPartnerTaskService matchPartnerTaskService) {
-        this.matchPartnerTaskService = matchPartnerTaskService;
-    }
 
     public MatchPartnerTaskResponseDto matchPartnersAndTasks(MatchPartnerTaskRequestDto requestDto){
         MatchPartnerTaskResponseDto responseDto = new MatchPartnerTaskResponseDto();

@@ -1,26 +1,38 @@
 package com.example.bookroomsolution;
 
-import com.example.bookroomsolution.controllers.BookingController;
-import com.example.bookroomsolution.dtos.MakeBookingRequestDto;
-import com.example.bookroomsolution.dtos.MakeBookingResponseDto;
-import com.example.bookroomsolution.dtos.ResponseStatus;
-import com.example.bookroomsolution.models.*;
-import com.example.bookroomsolution.repositories.BookingRepository;
-import com.example.bookroomsolution.repositories.CustomerSessionRepository;
-import com.example.bookroomsolution.repositories.RoomRepository;
-import com.example.bookroomsolution.repositories.UserRepository;
-import com.example.bookroomsolution.services.BookingService;
-import com.example.bookroomsolution.services.BookingServiceImpl;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.lang.reflect.Constructor;
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
+import com.example.bookroomsolution.controllers.BookingController;
+import com.example.bookroomsolution.dtos.MakeBookingRequestDto;
+import com.example.bookroomsolution.dtos.MakeBookingResponseDto;
+import com.example.bookroomsolution.dtos.ResponseStatus;
+import com.example.bookroomsolution.models.Booking;
+import com.example.bookroomsolution.models.Room;
+import com.example.bookroomsolution.models.RoomType;
+import com.example.bookroomsolution.models.User;
+import com.example.bookroomsolution.models.UserType;
+import com.example.bookroomsolution.repositories.BookingRepository;
+import com.example.bookroomsolution.repositories.CustomerSessionRepository;
+import com.example.bookroomsolution.repositories.RoomRepository;
+import com.example.bookroomsolution.repositories.UserRepository;
+import com.example.bookroomsolution.services.BookingService;
 
 @SpringBootTest
 class BookingControllerTest {

@@ -13,25 +13,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BuildBatchedTaskServiceImpl implements BuildBatchedTaskService{
+public class BuildBatchedTaskServiceImpl implements BuildBatchedTaskService {
+	@Autowired
+	private BatchedTaskRepository batchedTaskRepository;
+	@Autowired
+	private MapsAdapter mapsAdapter;
 
-    private BatchedTaskRepository batchedTaskRepository;
-    private MapsAdapter mapsAdapter;
-
-    @Autowired
-    public BuildBatchedTaskServiceImpl(BatchedTaskRepository batchedTaskRepository, MapsAdapter mapsAdapter) {
-        this.batchedTaskRepository = batchedTaskRepository;
-        this.mapsAdapter = mapsAdapter;
-    }
-
-    @Override
-    public List<Location> buildRoute(long batchedTaskId) throws BatchedTaskNotFoundException {
-        Optional<BatchedTask> batchedTaskOptional = batchedTaskRepository.findById(batchedTaskId);
-        if(batchedTaskOptional.isEmpty()){
-            throw new BatchedTaskNotFoundException("Batched Task not found");
-        }
-        BatchedTask batchedTask = batchedTaskOptional.get();
-        List<Location> dropLocations = batchedTask.getTasks().stream().map(Task::getDropLocation).toList();
-        return mapsAdapter.buildRoute(dropLocations);
-    }
+	@Override
+	public List<Location> buildRoute(long batchedTaskId) throws BatchedTaskNotFoundException {
+		Optional<BatchedTask> batchedTaskOptional = batchedTaskRepository.findById(batchedTaskId);
+		if (batchedTaskOptional.isEmpty()) {
+			throw new BatchedTaskNotFoundException("Batched Task not found");
+		}
+		BatchedTask batchedTask = batchedTaskOptional.get();
+		List<Location> dropLocations = batchedTask.getTasks().stream().map(Task::getDropLocation).toList();
+		return mapsAdapter.buildRoute(dropLocations);
+	}
 }

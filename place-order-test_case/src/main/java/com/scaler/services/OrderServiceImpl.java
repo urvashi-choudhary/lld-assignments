@@ -1,18 +1,20 @@
 package com.scaler.services;
 
-import com.scaler.exceptions.CustomerSessionNotFound;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 import com.scaler.exceptions.InvalidMenuItem;
 import com.scaler.exceptions.UserNotFoundException;
-import com.scaler.models.*;
+import com.scaler.models.CustomerSession;
+import com.scaler.models.CustomerSessionStatus;
+import com.scaler.models.MenuItem;
+import com.scaler.models.Order;
+import com.scaler.models.User;
 import com.scaler.repositories.CustomerSessionRepository;
 import com.scaler.repositories.MenuItemRepository;
 import com.scaler.repositories.OrderRepository;
 import com.scaler.repositories.UserRepository;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService{
 

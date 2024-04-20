@@ -1,7 +1,9 @@
 package com.example.ecom.exceptions;
 
 public class NotificationNotFoundException extends Exception{
-    public NotificationNotFoundException(String message) {
+    private static final long serialVersionUID = 1L;
+
+	public NotificationNotFoundException(String message) {
         super(message);
     }
 }

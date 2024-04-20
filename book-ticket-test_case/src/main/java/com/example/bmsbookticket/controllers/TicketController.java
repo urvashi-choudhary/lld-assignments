@@ -11,23 +11,18 @@ import com.example.bmsbookticket.services.TicketService;
 
 @Controller
 public class TicketController {
+	@Autowired
+	private TicketService ticketService;
 
-    private TicketService ticketService;
-
-    @Autowired
-    public TicketController(TicketService ticketService) {
-        this.ticketService = ticketService;
-    }
-
-    public BookTicketResponseDTO bookTicket(BookTicketRequestDTO requestDTO){
-        BookTicketResponseDTO responseDTO = new BookTicketResponseDTO();
-        try {
-            Ticket ticket = ticketService.bookTicket(requestDTO.getShowSeatIds(), requestDTO.getUserId());
-            responseDTO.setTicket(ticket);
-            responseDTO.setStatus(ResponseStatus.SUCCESS);
-        } catch (Exception e){
-            responseDTO.setStatus(ResponseStatus.FAILURE);
-        }
-        return responseDTO;
-    }
+	public BookTicketResponseDTO bookTicket(BookTicketRequestDTO requestDTO) {
+		BookTicketResponseDTO responseDTO = new BookTicketResponseDTO();
+		try {
+			Ticket ticket = ticketService.bookTicket(requestDTO.getShowSeatIds(), requestDTO.getUserId());
+			responseDTO.setTicket(ticket);
+			responseDTO.setStatus(ResponseStatus.SUCCESS);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseStatus.FAILURE);
+		}
+		return responseDTO;
+	}
 }

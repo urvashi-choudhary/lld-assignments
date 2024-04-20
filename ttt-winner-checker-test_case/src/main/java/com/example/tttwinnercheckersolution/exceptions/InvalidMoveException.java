@@ -1,7 +1,9 @@
 package com.example.tttwinnercheckersolution.exceptions;
 
 public class InvalidMoveException extends Exception {
-    public InvalidMoveException(String message) {
+    private static final long serialVersionUID = 1L;
+
+	public InvalidMoveException(String message) {
         super(message);
     }
 }

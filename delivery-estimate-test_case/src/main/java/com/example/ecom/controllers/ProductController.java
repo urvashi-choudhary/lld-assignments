@@ -11,24 +11,20 @@ import java.util.Date;
 
 @Controller
 public class ProductController {
+	@Autowired
+	private ProductService productService;
 
-    private ProductService productService;
-
-    @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
-
-    public DeliveryEstimateResponseDto estimateDeliveryTime(DeliveryEstimateRequestDto requestDto){
-        DeliveryEstimateResponseDto responseDto = new DeliveryEstimateResponseDto();
-        try{
-            Date estimateDeliveryDate = productService.estimateDeliveryDate(requestDto.getProductId(), requestDto.getAddressId());
-            responseDto.setExpectedDeliveryDate(estimateDeliveryDate);
-            responseDto.setResponseStatus(ResponseStatus.SUCCESS);
-            return responseDto;
-        } catch (Exception e){
-            responseDto.setResponseStatus(ResponseStatus.FAILURE);
-            return responseDto;
-        }
-    }
+	public DeliveryEstimateResponseDto estimateDeliveryTime(DeliveryEstimateRequestDto requestDto) {
+		DeliveryEstimateResponseDto responseDto = new DeliveryEstimateResponseDto();
+		try {
+			Date estimateDeliveryDate = productService.estimateDeliveryDate(requestDto.getProductId(),
+					requestDto.getAddressId());
+			responseDto.setExpectedDeliveryDate(estimateDeliveryDate);
+			responseDto.setResponseStatus(ResponseStatus.SUCCESS);
+			return responseDto;
+		} catch (Exception e) {
+			responseDto.setResponseStatus(ResponseStatus.FAILURE);
+			return responseDto;
+		}
+	}
 }

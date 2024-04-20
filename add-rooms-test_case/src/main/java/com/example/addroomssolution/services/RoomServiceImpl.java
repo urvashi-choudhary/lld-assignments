@@ -11,14 +11,14 @@ import com.example.addroomssolution.repositories.UserRepository;
 
 import java.util.Optional;
 
-public class RoomServiceImpl implements RoomService {
-    private RoomRepository roomRepository;
-    private UserRepository userRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
-    public RoomServiceImpl(RoomRepository roomRepository, UserRepository userRepository) {
-        this.roomRepository = roomRepository;
-        this.userRepository = userRepository;
-    }
+public class RoomServiceImpl implements RoomService {
+	@Autowired
+    private RoomRepository roomRepository;
+    @Autowired
+	private UserRepository userRepository;
+
 
     @Override
     public Room addRoom(long userId, String roomName, double price, String roomType, String description) throws UserNotFoundException, UnAuthorizedAccess {

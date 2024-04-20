@@ -1,5 +1,18 @@
 package com.example.getroomssolution;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.lang.reflect.Constructor;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.reflections.Reflections;
+import org.reflections.scanners.SubTypesScanner;
+
 import com.example.getroomssolution.controllers.RoomController;
 import com.example.getroomssolution.dtos.GetRoomsRequestDto;
 import com.example.getroomssolution.dtos.GetRoomsResponseDto;
@@ -8,19 +21,6 @@ import com.example.getroomssolution.models.Room;
 import com.example.getroomssolution.models.RoomType;
 import com.example.getroomssolution.repositories.RoomRepository;
 import com.example.getroomssolution.services.RoomService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.lang.reflect.Constructor;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RoomsControllerTest {
     private RoomRepository roomRepository;

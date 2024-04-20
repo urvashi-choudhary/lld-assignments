@@ -1,7 +1,5 @@
 package com.scaler.parking_lot.dtos;
 
-import com.scaler.parking_lot.models.AdditionalService;
-
 import java.util.List;
 
 public class GenerateTicketRequestDto {

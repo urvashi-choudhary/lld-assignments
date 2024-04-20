@@ -1,7 +1,5 @@
 package com.example.addroomssolution.dtos;
 
-import com.example.addroomssolution.models.RoomType;
-
 public class AddRoomRequestDto {
     private long userId;
     private String name;

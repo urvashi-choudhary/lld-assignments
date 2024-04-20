@@ -1,7 +1,9 @@
 package com.example.ecom.exceptions;
 
 public class OrderDoesNotBelongToUserException extends Exception {
-    public OrderDoesNotBelongToUserException(String message) {
+    private static final long serialVersionUID = 1L;
+
+	public OrderDoesNotBelongToUserException(String message) {
         super(message);
     }
 }

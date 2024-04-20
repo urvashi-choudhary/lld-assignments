@@ -12,7 +12,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Embeddable
 public class Location implements Serializable {
-    public Location(double latitude, double longitude) {
+    private static final long serialVersionUID = 1L;
+	public Location(double latitude, double longitude) {
 		super();
 		this.latitude = latitude;
 		this.longitude = longitude;

@@ -12,24 +12,19 @@ import java.util.List;
 
 @Controller
 public class RecommendationsController {
+	@Autowired
+	private RecommendationsService recommendationsService;
 
-    private RecommendationsService recommendationsService;
-
-    @Autowired
-    public RecommendationsController(RecommendationsService recommendationsService) {
-        this.recommendationsService = recommendationsService;
-    }
-
-    public GenerateRecommendationsResponseDto generateRecommendations(GenerateRecommendationsRequestDto requestDto) {
-        GenerateRecommendationsResponseDto responseDto = new GenerateRecommendationsResponseDto();
-        try{
-            List<Product> recommendations = recommendationsService.getRecommendations(requestDto.getProductId());
-            responseDto.setRecommendations(recommendations);
-            responseDto.setResponseStatus(ResponseStatus.SUCCESS);
-            return responseDto;
-        } catch (Exception e) {
-            responseDto.setResponseStatus(ResponseStatus.FAILURE);
-            return responseDto;
-        }
-    }
+	public GenerateRecommendationsResponseDto generateRecommendations(GenerateRecommendationsRequestDto requestDto) {
+		GenerateRecommendationsResponseDto responseDto = new GenerateRecommendationsResponseDto();
+		try {
+			List<Product> recommendations = recommendationsService.getRecommendations(requestDto.getProductId());
+			responseDto.setRecommendations(recommendations);
+			responseDto.setResponseStatus(ResponseStatus.SUCCESS);
+			return responseDto;
+		} catch (Exception e) {
+			responseDto.setResponseStatus(ResponseStatus.FAILURE);
+			return responseDto;
+		}
+	}
 }

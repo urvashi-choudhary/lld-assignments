@@ -1,7 +1,8 @@
 package com.scaler.controllers;
 
-import com.scaler.dtos.*;
-import com.scaler.models.Bill;
+import com.scaler.dtos.PlaceOrderRequestDto;
+import com.scaler.dtos.PlaceOrderResponseDto;
+import com.scaler.dtos.ResponseStatus;
 import com.scaler.models.Order;
 import com.scaler.services.OrderService;
 

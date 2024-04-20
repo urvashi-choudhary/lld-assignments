@@ -12,24 +12,19 @@ import java.util.List;
 
 @Controller
 public class BatchedTaskController {
+	@Autowired
+	private BuildBatchedTaskService buildBatchedTaskService;
 
-    private BuildBatchedTaskService buildBatchedTaskService;
-
-    @Autowired
-    public BatchedTaskController(BuildBatchedTaskService buildBatchedTaskService) {
-        this.buildBatchedTaskService = buildBatchedTaskService;
-    }
-
-    public BuildBatchedTaskRouteResponseDto buildRoute(BuildBatchedTaskRouteRequestDto requestDto){
-        BuildBatchedTaskRouteResponseDto responseDto = new BuildBatchedTaskRouteResponseDto();
-        try{
-            List<Location> routeToBeTaken = buildBatchedTaskService.buildRoute(requestDto.getBatchedTaskId());
-            responseDto.setStatus(ResponseStatus.SUCCESS);
-            responseDto.setRouteToBeTaken(routeToBeTaken);
-        } catch (Exception e){
-            e.printStackTrace();
-            responseDto.setStatus(ResponseStatus.FAILURE);
-        }
-        return responseDto;
-    }
+	public BuildBatchedTaskRouteResponseDto buildRoute(BuildBatchedTaskRouteRequestDto requestDto) {
+		BuildBatchedTaskRouteResponseDto responseDto = new BuildBatchedTaskRouteResponseDto();
+		try {
+			List<Location> routeToBeTaken = buildBatchedTaskService.buildRoute(requestDto.getBatchedTaskId());
+			responseDto.setStatus(ResponseStatus.SUCCESS);
+			responseDto.setRouteToBeTaken(routeToBeTaken);
+		} catch (Exception e) {
+			e.printStackTrace();
+			responseDto.setStatus(ResponseStatus.FAILURE);
+		}
+		return responseDto;
+	}
 }

@@ -1,5 +1,21 @@
 package com.example.cloudprovidersolution;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.reflections.Reflections;
+import org.reflections.scanners.SubTypesScanner;
+
 import com.example.cloudprovidersolution.adapters.CloudAdapter;
 import com.example.cloudprovidersolution.controllers.CloudController;
 import com.example.cloudprovidersolution.dtos.CreateConnectionRequestDto;
@@ -10,21 +26,6 @@ import com.example.cloudprovidersolution.libraries.google.GoogleApi;
 import com.example.cloudprovidersolution.models.User;
 import com.example.cloudprovidersolution.repositories.UserRepository;
 import com.example.cloudprovidersolution.services.CloudService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CloudProviderSolutionApplicationTests {
     private CloudController cloudControllerWithAWSAdapter;

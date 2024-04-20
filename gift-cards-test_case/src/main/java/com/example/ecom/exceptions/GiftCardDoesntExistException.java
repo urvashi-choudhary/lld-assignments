@@ -1,7 +1,9 @@
 package com.example.ecom.exceptions;
 
 public class GiftCardDoesntExistException extends Exception{
-    public GiftCardDoesntExistException(String message) {
+    private static final long serialVersionUID = 1L;
+
+	public GiftCardDoesntExistException(String message) {
         super(message);
     }
 }

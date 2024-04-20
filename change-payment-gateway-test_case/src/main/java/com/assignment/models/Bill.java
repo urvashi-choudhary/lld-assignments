@@ -1,7 +1,5 @@
 package com.assignment.models;
 
-import java.util.Map;
-
 public class Bill extends BaseModel {
     private double totalAmount;
     private double gst;

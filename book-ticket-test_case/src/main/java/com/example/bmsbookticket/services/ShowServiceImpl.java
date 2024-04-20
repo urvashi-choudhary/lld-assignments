@@ -11,26 +11,23 @@ import java.util.*;
 
 @Service
 public class ShowServiceImpl implements ShowService{
-
+	
+	@Autowired
     private MovieRepository movieRepository;
+	@Autowired
     private SeatsRepository seatsRepository;
+	@Autowired
     private ScreenRepository screenRepository;
+    @Autowired
     private ShowRepository showRepository;
+    @Autowired
     private ShowSeatRepository showSeatRepository;
+    @Autowired
     private SeatTypeShowRepository seatTypeShowRepository;
+    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    public ShowServiceImpl(MovieRepository movieRepository, SeatsRepository seatsRepository, ScreenRepository screenRepository, ShowRepository showRepository, ShowSeatRepository showSeatRepository, SeatTypeShowRepository seatTypeShowRepository, UserRepository userRepository) {
-        this.movieRepository = movieRepository;
-        this.seatsRepository = seatsRepository;
-        this.screenRepository = screenRepository;
-        this.showRepository = showRepository;
-        this.showSeatRepository = showSeatRepository;
-        this.seatTypeShowRepository = seatTypeShowRepository;
-        this.userRepository = userRepository;
-    }
-
+    
     @Override
     public Show createShow(int userId, int movieId, int screenId, Date startTime, Date endTime, List<Pair<SeatType, Double>> pricingConfig, List<Feature> features) throws MovieNotFoundException, ScreenNotFoundException, FeatureNotSupportedByScreen, InvalidDateException, UserNotFoundException, UnAuthorizedAccessException {
         User admin = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));

@@ -1,9 +1,8 @@
 package com.scaler.parking_lot.respositories;
 
-import com.scaler.parking_lot.models.*;
-
-import java.util.Date;
 import java.util.Optional;
+
+import com.scaler.parking_lot.models.Ticket;
 
 public interface TicketRepository {
     // Do not modify the method signature, feel free to add new methods
